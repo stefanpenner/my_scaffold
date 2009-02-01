@@ -5,7 +5,7 @@
 class MyScaffoldGeneratorConfig
   
   DEFAULT_TEMPLATING = 'haml'
-  DEFAULT_FUNCTIONAL_TEST_STYLE = 'should_be_restful'
+  DEFAULT_FUNCTIONAL_TEST_STYLE = 'basic'
   
   def initialize()
     @config = load_file(config_file)
@@ -68,6 +68,7 @@ class MyScaffoldGenerator < Rails::Generator::NamedBase
                 :controller_underscore_name,
                 :controller_singular_name,
                 :controller_plural_name
+
   alias_method  :controller_file_name,  :controller_underscore_name
   alias_method  :controller_table_name, :controller_plural_name
 
@@ -81,6 +82,7 @@ class MyScaffoldGenerator < Rails::Generator::NamedBase
     base_name, @controller_class_path, @controller_file_path, @controller_class_nesting, @controller_class_nesting_depth = extract_modules(@controller_name)
     @controller_class_name_without_nesting, @controller_underscore_name, @controller_plural_name = inflect_names(base_name)
     @controller_singular_name=base_name.singularize
+
     if @controller_class_nesting.empty?
       @controller_class_name = @controller_class_name_without_nesting
     else
@@ -113,18 +115,29 @@ class MyScaffoldGenerator < Rails::Generator::NamedBase
       end
 
       # Layout and stylesheet.
-      m.template("#{templating}/layout.html.#{templating}", File.join('app/views/layouts', controller_class_path, "#{controller_file_name}.html.#{templating}"))
+      m.template("#{templating}/layout.html.#{templating}", 
+                 File.join('app/views/layouts', 
+                           controller_class_path, 
+                           "#{controller_file_name}.html.#{templating}"))
 
       %w(print screen ie).each do |stylesheet|
         m.template("blueprint/#{stylesheet}.css", "public/stylesheets/blueprint/#{stylesheet}.css")
       end
 
-      m.template(
-        'controller.rb', File.join('app/controllers', controller_class_path, "#{controller_file_name}_controller.rb")
-      )
+      m.template('controller.rb', 
+                 File.join('app/controllers', 
+                            controller_class_path, 
+                            "#{controller_file_name}_controller.rb")
 
-      m.template("functional_test/#{functional_test_style}.rb", File.join('test/functional', controller_class_path, "#{controller_file_name}_controller_test.rb"))
-      m.template('helper.rb',          File.join('app/helpers',     controller_class_path, "#{controller_file_name}_helper.rb"))
+      m.template("functional_test/#{functional_test_style}.rb", 
+                  File.join('test/functional', 
+                            controller_class_path, 
+                            "#{controller_file_name}_controller_test.rb"))
+
+      m.template('helper.rb',          
+                 File.join('app/helpers',     
+                 controller_class_path, 
+                 "#{controller_file_name}_helper.rb"))
 
       m.route_resources controller_file_name
 
@@ -151,10 +164,15 @@ class MyScaffoldGenerator < Rails::Generator::NamedBase
       opt.separator 'Options:'
       opt.on("--skip-timestamps",
              "Don't add timestamps to the migration file for this model") { |v| options[:skip_timestamps] = v }
+
       opt.on("--skip-migration",
              "Don't generate a migration file for this model") { |v| options[:skip_migration] = v }
-      opt.on("--templating [erb|haml]", "Specify the templating to use (haml by default)") { |v| options[:templating] = v }
-      opt.on("--functional-test-style [basic|should_be_restful]", "Specify the style of the functional test (should_be_restful by default)") { |v| options[:functional_test_style] = v }
+
+      opt.on("--templating [erb|haml]", 
+             "Specify the templating to use (haml by default)") { |v| options[:templating] = v }
+
+      opt.on("--functional-test-style [basic|should_be_restful]", 
+             "Specify the style of the functional test (should_be_restful by default)") { |v| options[:functional_test_style] = v }
       
      end
 
