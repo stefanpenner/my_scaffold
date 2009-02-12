@@ -14,7 +14,7 @@ Description:
     db/migrate.
 
 Examples:
-    `./script/generate shoulda_model account`
+    `./script/generate my_model account`
 
         creates an Account model, test, factory, and migration:
             Model:      app/models/account.rb
@@ -22,6 +22,6 @@ Examples:
             Factory:    test/factories/account_factory.rb
             Migration:  db/migrate/XXX_add_accounts.rb
 
-    `./script/generate shoulda_model post title:string body:text published:boolean`
+    `./script/generate my_model post title:string body:text published:boolean`
 
         creates a Post model with a string title, text body, and published flag.

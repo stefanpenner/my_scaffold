@@ -40,7 +40,8 @@ class <%= controller_class_name %>Controller < ApplicationController
   def destroy
     @<%= file_name %> = <%= class_name %>.find(params[:id])
     @<%= file_name %>.destroy
-
+    
+    flash[:success] = "User @<%= file_name %> was removed"
     redirect_to(<%= table_name %>_url)
   end
 end

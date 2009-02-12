@@ -13,22 +13,22 @@ Description:
     You don't have to think up every attribute up front, but it helps to
     sketch out a few so you can start working with the resource immediately.
 
-    For example, `scaffold post title:string body:text published:boolean`
+    For example, `my_scaffold post title:string body:text published:boolean`
     gives you a model with those three attributes, a controller that handles
     the create/show/update/destroy, forms to create and edit your posts, and
     an index that lists them all, as well as a map.resources :posts
     declaration in config/routes.rb.
     
     You can override the default values for templating and
-    functional\_test\_style by placing a .shoulda\_generator file in your home
+    functional\_test\_style by placing a .my\_generator file in your home
     directory.
 
-    Here's an example `.shoulda_generator`:
+    Here's an example `.my_generator`:
 
-        :templating: erb              # supported options: haml|erb
+        :templating: haml              # supported options: haml|erb
         :functional_test_syle: basic  # supported options: should_be_restful|basic
 
 Examples:
-    `./script/generate shoulda_scaffold post` # no attributes, view will be anemic
-    `./script/generate shoulda_scaffold post title:string body:text published:boolean`
-    `./script/generate shoulda_scaffold purchase order_id:integer amount:decimal`
+    `./script/generate my_scaffold post` # no attributes, view will be anemic
+    `./script/generate my_scaffold post title:string body:text published:boolean`
+    `./script/generate my_scaffold purchase order_id:integer amount:decimal`
