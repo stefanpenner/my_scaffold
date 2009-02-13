@@ -49,18 +49,18 @@ namespace :generator do
   task :generate do
     puts "building gem"
     system "rake gem"
-	system "rake install"
+    system "rake install"
     puts "generating rails app"
-	FileUtils.cd("test")
-	system "rails rails_test"
-	puts "swapping environment.rb file"
-	FileUtils.cp("environment.rb","rails_test/config/environment.rb")
-	FileUtils.cd("rails_test")
+    FileUtils.cd("test")
+    system "rails rails_test"
+    puts "swapping environment.rb file"
+    FileUtils.cp("environment.rb","rails_test/config/environment.rb")
+    FileUtils.cd("rails_test")
     system "rake gems:unpack"
-	puts "./script/generate my_scaffold apple name:string"
-	system "./script/generate my_scaffold apple name:string"
+    puts "./script/generate my_scaffold apple name:string"
+    system "./script/generate my_scaffold apple name:string"
     system "rake db:migrate"
- 	system "rake"
+    system "rake"
   end
 end
 
