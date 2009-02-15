@@ -16,7 +16,7 @@ class <%= controller_class_name %>Controller < ApplicationController
   end
 
   def create
-    @<%= file_name %> = <%= class_name %>.new(params[:<%= file_name %>])
+    @<%= file_name %> = <%= class_name %>.create(params[:<%= file_name %>])
 
     if @<%= file_name %>.save
       flash[:notice] = '<%= singular_name.humanize %> was successfully created.'
